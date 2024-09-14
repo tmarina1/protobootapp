@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 //App para hallar el cuadrado y el cubo de un número
 //Se lanza y se ejecuta con http://localhost:8080 o la URL específica al proveedor cloud
+// Aplicación de Tomasas
 @SpringBootApplication
 @RestController
 public class ProtobootappApplication {
