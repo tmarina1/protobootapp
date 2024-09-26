@@ -1,5 +1,12 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    LOGIN: SonarCloudSecret:sonartoken
+    HOST: SonarCloudSecret:HOST
+    Organization: SonarCloudSecret:Organization
+    Project: SonarCloudSecret:Project
+
 phases:
   install:
     #Si utiliza la imagen estándar de Ubuntu 2.0 o posterior, debe especificar las versiones del tiempo de ejecución.
@@ -7,11 +14,16 @@ phases:
     runtime-versions:
       java: corretto17
 
+  pre_build:
+    commands:
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
+
   build:
     commands:
       - mvn compile
       - mvn test
       - mvn install
+      - mvn sonar:sonar -Dsonar.login=$LOGIN -Dsonar.host.url=$HOST -Dsonar.projectKey=$Project -Dsonar.organization=$Organization
       # - command
   post_build:
     commands:
